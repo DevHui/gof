@@ -9,8 +9,41 @@ public class Client {
 
 		// testVersion1();
 
-		testVersion2();
+//		testVersion2();
+		
+		testVersion3();
 
+	}
+
+	private static void testVersion3() {
+
+		LogModel lml = new LogModel();
+		
+		lml.setLogId("001");
+		lml.setOperateUser("admin");
+		lml.setOperateTime("2016-12-07 22:14:56");
+		lml.setLogContent("this is a sss");
+		
+		List<LogModel> list = new ArrayList<LogModel>();
+		
+		list.add(lml);
+		
+		LogFileOperateApi fileLogAppi = new LogFileOperate("");
+		LogDbOperateApi dbLogApi = new LogDbOperate();
+		
+		LogFileOperateApi fileLogAppi2 = new TwoDirectAdapter(fileLogAppi, dbLogApi);
+		
+		LogDbOperateApi dbLogApi2 = new TwoDirectAdapter(fileLogAppi, dbLogApi);
+		
+		
+		dbLogApi2.createLog(lml);
+		
+		List<LogModel> allLog = dbLogApi2.getAllLog();
+		System.out.println("allLog=" + allLog);
+		
+		fileLogAppi2.writeLogFile(list);
+		fileLogAppi2.readLogFile();
+		
 	}
 
 	private static void testVersion2() {
