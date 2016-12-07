@@ -7,6 +7,42 @@ public class Client {
 
 	public static void main(String[] args) {
 
+		// testVersion1();
+
+		testVersion2();
+
+	}
+
+	private static void testVersion2() {
+
+		LogFileOperateApi adaptee = new LogFileOperate("");
+
+		LogDbOperateApi api = new Adapter(adaptee);
+
+		LogModel lml = new LogModel();
+		lml.setLogId("001");
+		lml.setOperateUser("admin");
+		lml.setOperateTime("2016-12-06 22:14:56");
+		lml.setLogContent("this is a test222");
+
+		api.updateLog(lml);
+
+		List<LogModel> readLog = api.getAllLog();
+
+		for (LogModel item : readLog) {
+			System.out.println("item=" + item);
+		}
+
+		lml.setLogContent("this is a testdddd");
+		api.updateLog(lml);
+
+		readLog = api.getAllLog();
+		System.out.println("readLog=" + readLog);
+
+	}
+
+	private static void testVersion1() {
+
 		LogModel lml = new LogModel();
 
 		lml.setLogId("001");
@@ -32,6 +68,7 @@ public class Client {
 		List<LogModel> readLog = api.readLogFile();
 
 		System.out.println("readLog=" + readLog);
+
 	}
 
 }
